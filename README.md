@@ -11,7 +11,7 @@
 
 
 ### 🔭 I’m working - I don't work in any company, I am busy building my skills. 
-### 🌱 I’m exploring - Advanced React JS and JavaScript. 
+### 🌱 I’m exploring - Mongoose and Express.js . 
 ### 👯 I’m looking - For Fresher frontend developer job. 
 ### 🤔 I’m trying - To solve code errors and explore new technologies. 
 ### ⚡ Fun fact - I like to learn new things from anyone.
