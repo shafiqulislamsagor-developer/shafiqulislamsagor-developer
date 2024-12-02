@@ -30,7 +30,7 @@
   
   <img  align="center"  src="https://github-readme-stats.vercel.app/api?username=shafiqulislamsagor-developer&theme=dark&show_icons=true&count_private=true" />
   <br></br>
-  <img  title="🔥 Get streak stats for your profile at git.io/streak-stats" alt="Mark streak" src="https://github-readme-streak-stats.herokuapp.com/?user=shafiqulislamsagor-developer&theme=dark&hide_border=false" /> 
+<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=shafiqulislamsagor-developer&theme=dark&background=0d1117&date_format=M%20j%5B%2C%20Y%5D" alt="shafiqul islam sagor" /></p>
 </td>
 
 <td width="50%" align="center">
@@ -140,12 +140,6 @@
  </tr>
 </table>
 <br/>
-
-
-
-[![trophy](https://github-profile-trophy.vercel.app/?username=shafiqulislamsagor-developer&theme=onedark)](https://github.com/ryo-ma/github-profile-trophy)
-
-
 
 
   <em>
