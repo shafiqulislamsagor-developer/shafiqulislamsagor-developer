@@ -135,6 +135,10 @@
         <img src="https://skillicons.dev/icons?i=mongodb" width="48" height="48" alt="Git" />
       <br>MongoDB
     </td>
+      <td align="center" width="96">
+        <img src="https://skillicons.dev/icons?i=sass" width="48" height="48" alt="sass" />
+      <br>Sass
+    </td>
   </tr>
  <tr>
  </tr>
