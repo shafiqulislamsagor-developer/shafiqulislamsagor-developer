@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="100%" src="assets/Black Gradient Minimalistic Future Technology YouTube Banner.gif" alt="cover" />
+  <img width="100%" src="assets/Front-end.gif" alt="cover" />
 </div>
 
 <!--👀VIEWS / 🌐WEBSITE: https://github.com/antonkomarev/github-profile-views-counter -->
