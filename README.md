@@ -96,11 +96,11 @@
     </td>
     <td align="center" width="96">
         <img src="https://skillicons.dev/icons?i=c" width="48" height="48" alt="css" />
-      <br>CSS
+      <br>C
     </td>
     <td align="center" width="96">
         <img src="https://skillicons.dev/icons?i=cpp" width="48" height="48" alt="css" />
-      <br>CSS
+      <br>C++
     </td>
      <td align="center"  width="96">
         <img src="https://skillicons.dev/icons?i=bootstrap" width="48" height="48" alt="bootstrap" />
