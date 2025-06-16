@@ -77,7 +77,7 @@
 ## 🐍 Contribution Snake Animation
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/shafiqulislamsagor-developer/shafiqulislamsagor-developer/output/github-contribution-grid-snake.svg" alt="snake gif" />
+<img src="https://raw.githubusercontent.com/shafiqulislamsagor-developer/shafiqulislamsagor-developer/output/github-contribution-grid-snake.svg" alt="snake gif" />
 </p>
 
 ---
