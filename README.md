@@ -14,17 +14,18 @@
 </h1>
 
 <p align="center" style="font-size: 1.1rem; color: #4b5563; max-width: 600px; margin: 0 auto;">
-  Frontend Developer | React.js | Next.js | Express.js | Passionate about clean & scalable code.
+  Frontend Developer | React.js | Next.js | Express.js <br />
+  Passionate about clean, scalable, and maintainable code.
 </p>
 
 ---
 
 ## 👨‍💻 About Me
 
-- 📅 **Experience:** 1+ year in Frontend Development  
-- 🔭 **Currently working on:** Fullstack projects with Next.js & Express.js  
-- 🌱 **Learning:** Advanced React patterns, Mongoose, Node.js APIs  
-- 📫 **Reach me at:** [Email](mailto:shafiqu.sagor@example.com) | [LinkedIn](https://linkedin.com/in/shafiqulislamsagor)  
+- 🔧 **Experience:** 1+ year in Frontend Development  
+- 🚀 **Current Focus:** Fullstack projects using Next.js, Express.js & MongoDB  
+- 🌱 **Learning:** Advanced React patterns, TypeScript, REST API design  
+- 📫 **Reach me:** [Email](mailto:shafiqu.sagor@example.com) | [LinkedIn](https://linkedin.com/in/shafiqulislamsagor)
 
 ---
 
@@ -37,31 +38,31 @@
 
 ---
 
-## 🛠️ Skills & Proficiency
+## 🛠️ Skills & Technologies
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=react,nextjs,tailwind,js,ts,nodejs,express,mongodb,html,css,bootstrap,redux,figma" />
 </p>
 
-> Below are estimated proficiency levels:
+### 🧠 Proficiency Overview
 
-| Skill              | Proficiency           | Skill             | Proficiency           | Skill              | Proficiency           |
-|--------------------|-----------------------|-------------------|------------------------|---------------------|------------------------|
-| **React.js**       | ![85%](https://img.shields.io/badge/Proficient-85%25-brightgreen) | **Next.js**         | ![70%](https://img.shields.io/badge/Intermediate-70%25-yellow) | **Framer Motion** | ![50%](https://img.shields.io/badge/Familiar-50%25-orange) |
-| **Redux**          | ![70%](https://img.shields.io/badge/Intermediate-70%25-yellow)    | **React Query**     | ![65%](https://img.shields.io/badge/Intermediate-65%25-yellow)  | **TanStack Query**| ![50%](https://img.shields.io/badge/Familiar-50%25-orange) |
-| **React Hook Form**| ![50%](https://img.shields.io/badge/Familiar-50%25-orange)        | **Shadcn/UI**       | ![50%](https://img.shields.io/badge/Familiar-50%25-orange)      | **Ant Design**    | ![50%](https://img.shields.io/badge/Familiar-50%25-orange) |
-| **TypeScript**     | ![60%](https://img.shields.io/badge/Intermediate-60%25-yellow)    | **HTML**            | ![90%](https://img.shields.io/badge/Advanced-90%25-brightgreen) | **CSS**           | ![90%](https://img.shields.io/badge/Advanced-90%25-brightgreen) |
-| **Tailwind CSS**   | ![75%](https://img.shields.io/badge/Intermediate-75%25-yellow)    | **Bootstrap**       | ![70%](https://img.shields.io/badge/Intermediate-70%25-yellow)  |                     |                          |
+| Skill              | Level                | Skill             | Level                | Skill              | Level               |
+|--------------------|----------------------|-------------------|----------------------|--------------------|---------------------|
+| **React.js**       | 🟢 Proficient (85%)   | **Next.js**       | 🟡 Intermediate (70%)| **Framer Motion**  | 🟠 Familiar (50%)   |
+| **Redux**          | 🟡 Intermediate (70%) | **React Query**   | 🟡 Intermediate (65%)| **TanStack Query** | 🟠 Familiar (50%)   |
+| **React Hook Form**| 🟠 Familiar (50%)     | **Shadcn/UI**     | 🟠 Familiar (50%)    | **Ant Design**     | 🟠 Familiar (50%)   |
+| **TypeScript**     | 🟡 Intermediate (60%) | **HTML**          | 🟢 Advanced (90%)    | **CSS**            | 🟢 Advanced (90%)   |
+| **Tailwind CSS**   | 🟡 Intermediate (75%) | **Bootstrap**     | 🟡 Intermediate (70%)|                    |                     |
 
 ---
 
-### 🖥️ Backend & Programming
+### 🖥️ Backend & Programming Languages
 
-| Skill         | Proficiency           | Skill      | Proficiency           |
-|---------------|------------------------|------------|------------------------|
-| **Express.js**| ![65%](https://img.shields.io/badge/Intermediate-65%25-yellow) | **MongoDB** | ![65%](https://img.shields.io/badge/Intermediate-65%25-yellow) |
-| **Node.js**   | ![60%](https://img.shields.io/badge/Intermediate-60%25-yellow) | **C**       | ![40%](https://img.shields.io/badge/Basic-40%25-red)           |
-| **C++**       | ![40%](https://img.shields.io/badge/Basic-40%25-red)           |            |                         |
+| Skill         | Level                | Skill      | Level                |
+|---------------|----------------------|------------|----------------------|
+| **Express.js**| 🟡 Intermediate (65%) | **MongoDB**| 🟡 Intermediate (65%)|
+| **Node.js**   | 🟡 Intermediate (60%) | **C**      | 🔴 Basic (40%)       |
+| **C++**       | 🔴 Basic (40%)        |            |                      |
 
 ---
 
@@ -74,26 +75,31 @@
 
 ---
 
-## 🐍 Contribution Snake Animation
+
+
+<details>
+<summary>🐍 View Snake Contribution Animation</summary>
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/shafiqulislamsagor-developer/shafiqulislamsagor-developer/output/github-contribution-grid-snake.svg" alt="snake gif" />
+  <img src="https://raw.githubusercontent.com/shafiqulislamsagor-developer/shafiqulislamsagor-developer/output/github-contribution-grid-snake.svg" alt="Snake Animation" />
 </p>
+
+</details>
 
 ---
 
 ## 📫 Connect with Me
 
 <p align="center">
-  <a href="https://linkedin.com/in/shafiqulislamsagor" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+  <a href="https://linkedin.com/in/shafiqulislamsagor" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
-  &nbsp;&nbsp;
-  <a href="https://twitter.com/shafiqulsagor" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+  &nbsp;
+  <a href="https://twitter.com/shafiqulsagor" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/Twitter-1DA1F2?style=flat&logo=twitter&logoColor=white" alt="Twitter" />
   </a>
-  &nbsp;&nbsp;
-  <a href="https://github.com/shafiqulislamsagor-developer" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+  &nbsp;
+  <a href="https://github.com/shafiqulislamsagor-developer" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub" />
   </a>
 </p>
@@ -101,5 +107,5 @@
 ---
 
 <p align="center" style="font-size: 0.85rem; color: #94a3b8; margin-top: 1rem;">
-  Crafted with ❤️ by Shafiqul Islam Sagor | Last updated: 16 June 2025
+  Crafted with ❤️ by Shafiqul Islam Sagor • Last updated: 16 June 2025
 </p>
