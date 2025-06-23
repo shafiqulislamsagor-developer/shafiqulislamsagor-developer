@@ -22,19 +22,19 @@
 
 ## 👨‍💻 About Me
 
-- 🔧 **Experience:** 1+ year in Frontend Development  
-- 🚀 **Current Focus:** Fullstack projects using Next.js, Express.js & MongoDB  
-- 🌱 **Learning:** Advanced React patterns, TypeScript, REST API design  
-- 📫 **Reach me:** [Email](mailto:shafiqu.sagor@example.com) | [LinkedIn](https://linkedin.com/in/shafiqulislamsagor)
+- 🔧 **Experience:** 1+ year in frontend development  
+- 🚀 **Currently Working On:** Fullstack projects using Next.js, Express.js & MongoDB  
+- 🌱 **Learning:** Advanced React patterns, TypeScript, and API architecture  
+- 📫 **Contact Me:** [Email](mailto:shafiqul.islam.sagor.developer@gmail.com) | [LinkedIn](https://www.linkedin.com/in/shafiqulislamsagor-dev/)
 
 ---
 
 ## 💼 Experience & Projects
 
-| Period             | Role               | Project/Company        | Highlights                       |
-|--------------------|--------------------|------------------------|----------------------------------|
-| Jul 2023 – Oct 2024| Frontend Developer | TechnoGenix Solutions  | React, Tailwind CSS, REST APIs   |
-| Nov 2024 – Present | Fullstack Developer| Personal Projects      | Next.js, Express.js, MongoDB     |
+| Period             | Role               | Organization/Project    | Key Technologies             |
+|--------------------|--------------------|--------------------------|------------------------------|
+| Jul 2023 – Oct 2024| Frontend Developer | TechnoGenix Solutions    | React, Tailwind CSS, REST API |
+| Nov 2024 – June 2025| Fullstack Developer| Raintor        | Next.js, Express.js, MongoDB |
 
 ---
 
@@ -56,13 +56,13 @@
 
 ---
 
-### 🖥️ Backend & Programming Languages
+## 🖥️ Backend & Programming Languages
 
 | Skill         | Level                | Skill      | Level                |
 |---------------|----------------------|------------|----------------------|
 | **Express.js**| 🟡 Intermediate (65%) | **MongoDB**| 🟡 Intermediate (65%)|
 | **Node.js**   | 🟡 Intermediate (60%) | **C**      | 🔴 Basic (40%)       |
-| **C++**       | 🔴 Basic (40%)        |            |                      |
+| **C++**       | 🔴 Basic (40%)        | **Python** | 🔴 Basic (20%)          |
 
 ---
 
@@ -75,23 +75,10 @@
 
 ---
 
-
-
-<details>
-<summary>🐍 View Snake Contribution Animation</summary>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/shafiqulislamsagor-developer/shafiqulislamsagor-developer/output/github-contribution-grid-snake.svg" alt="Snake Animation" />
-</p>
-
-</details>
-
----
-
 ## 📫 Connect with Me
 
 <p align="center">
-  <a href="https://linkedin.com/in/shafiqulislamsagor" target="_blank" rel="noopener noreferrer">
+  <a href="https://www.linkedin.com/in/shafiqulislamsagor-dev/" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
   &nbsp;
