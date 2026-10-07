@@ -8,6 +8,10 @@
 </p>
 
 <p align="center">
+  <img src="./assets/readme/marquee.svg" width="100%" alt="React · Next.js · TypeScript · Node.js · Express · MongoDB · Tailwind CSS · Redux" />
+</p>
+
+<p align="center">
   <img src="./assets/readme/title-about.svg" width="100%" alt="01 — About me" />
   <img src="./assets/readme/about.svg" width="100%" alt="About me: Full Stack Developer at Softs.Ai, based in Mymensingh, Bangladesh. Stack: React, Next.js, TypeScript, Node.js, MongoDB. Currently learning advanced React patterns and API architecture. Values clean, scalable and maintainable code. Open to work." />
 </p>

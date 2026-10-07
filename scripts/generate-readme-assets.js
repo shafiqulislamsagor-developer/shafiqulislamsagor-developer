@@ -85,6 +85,17 @@ const BUTTONS = [
   { file: "btn-x", label: "X / Twitter", color: C.text, icon: "x" },
 ];
 
+// two crossing ribbons that scroll in opposite directions
+const MARQUEE = {
+  front: ["REACT", "NEXT.JS", "TYPESCRIPT", "NODE.JS", "EXPRESS", "MONGODB", "TAILWIND CSS", "REDUX"],
+  back: ["CLEAN CODE", "SCALABLE APIS", "PIXEL PERFECT UI", "FULL STACK", "OPEN TO WORK", "MYMENSINGH · BD"],
+};
+
+// the little 3D shape spinning in each section title
+const TITLE_SHAPES = { about: "cube", stack: "octa", skills: "tetra", experience: "cube", contrib: "octa", connect: "tetra" };
+
+const RGB = [C.cyan, C.indigo2, C.violet, C.pink, C.amber, C.green, C.cyan];
+
 /* ═════════════════════════════ HELPERS ══════════════════════════════ */
 
 const SANS = `'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Ubuntu, Arial, sans-serif`;
@@ -164,6 +175,57 @@ const mul = (a, s) => [a[0] * s, a[1] * s, a[2] * s];
 const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 const sph = (lat, lon) => [Math.cos(lat * D2R) * Math.cos(lon * D2R), Math.sin(lat * D2R), Math.cos(lat * D2R) * Math.sin(lon * D2R)];
 const polyline = (pts) => pts.map((p, i) => `${i ? "L" : "M"}${n(p[0])} ${n(p[1])}`).join("");
+const TAU = Math.PI * 2;
+
+/** perspective projection: camera on +z at distance `cam` (unit-radius models) */
+const persp = ([x, y, z], cx, cy, s, cam = 4.5) => { const k = cam / (cam - z); return [cx + s * x * k, cy - s * y * k, z]; };
+
+function edgesAt(V, d) {
+  const E = [];
+  V.forEach((a, i) => V.forEach((b, j) => {
+    if (j > i && Math.abs(Math.hypot(...a.map((c, k) => c - b[k])) - d) < 1e-6) E.push([i, j]);
+  }));
+  return E;
+}
+const unit = (V) => { const m = Math.max(...V.map((p) => Math.hypot(...p))); return V.map((p) => p.map((c) => c / m)); };
+
+const SHAPES = {
+  cube() { const V = []; for (const x of [-1, 1]) for (const y of [-1, 1]) for (const z of [-1, 1]) V.push([x, y, z]); return { V: unit(V), E: edgesAt(V, 2) }; },
+  octa() { const V = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]; return { V, E: edgesAt(V, Math.SQRT2) }; },
+  tetra() { const V = [[1, 1, 1], [1, -1, -1], [-1, 1, -1], [-1, -1, 1]]; return { V: unit(V), E: edgesAt(V, 2 * Math.SQRT2) }; },
+  icosa() {
+    const p = (1 + Math.sqrt(5)) / 2, V = [];
+    for (const a of [-1, 1]) for (const b of [-1, 1]) V.push([0, a, b * p], [a, b * p, 0], [b * p, 0, a]);
+    return { V: unit(V), E: edgesAt(V, 2) };
+  },
+};
+
+/**
+ * Spinning wireframe. Every edge is its own path so its brightness can follow depth.
+ * The spin is a full turn with a sinusoidal wobble, so frame N equals frame 0 (seamless loop).
+ */
+function wireframe(shape, { cx, cy, size, frames = 48, dur = 12, tilt = 0.5, wobble = 0.25, roll = 0.2, color = C.cyan, width = 1.3, minO = 0.18, maxO = 1, dots = false }) {
+  const { V, E } = SHAPES[shape]();
+  const F = [];
+  for (let f = 0; f <= frames; f++) {
+    const ph = f / frames;
+    F.push(V.map((p) => persp(rotZ(rotX(rotY(p, TAU * ph), tilt + wobble * Math.sin(TAU * ph)), roll), cx, cy, size)));
+  }
+  let out = `<g fill="none" stroke="${color}" stroke-width="${width}" stroke-linecap="round">`;
+  for (const [a, b] of E) {
+    const d = F.map((P) => `M${n(P[a][0])} ${n(P[a][1])}L${n(P[b][0])} ${n(P[b][1])}`);
+    const o = F.map((P) => n(minO + (maxO - minO) * clamp(((P[a][2] + P[b][2]) / 2 + 1) / 2, 0, 1)));
+    out += `<path d="${d[0]}" stroke-opacity="${o[0]}"><animate attributeName="d" values="${d.join(";")}" dur="${dur}s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values="${o.join(";")}" dur="${dur}s" repeatCount="indefinite"/></path>`;
+  }
+  out += `</g>`;
+  if (dots) {
+    V.forEach((_, i) => {
+      const t = F.map((P) => `${n(P[i][0])} ${n(P[i][1])}`), o = F.map((P) => n(0.25 + 0.75 * clamp((P[i][2] + 1) / 2, 0, 1)));
+      out += `<g opacity="${o[0]}"><animate attributeName="opacity" values="${o.join(";")}" dur="${dur}s" repeatCount="indefinite"/><g transform="translate(${t[0]})"><animateTransform attributeName="transform" type="translate" values="${t.join(";")}" dur="${dur}s" repeatCount="indefinite"/><circle r="${n(width * 3)}" fill="${color}" fill-opacity="0.25"/><circle r="${n(width * 1.2)}" fill="#f0f9ff"/></g></g>`;
+    });
+  }
+  return out;
+}
 
 /* ═══════════════════════════════ HERO ═══════════════════════════════ */
 
@@ -183,7 +245,9 @@ function hero() {
   <radialGradient id="sphere" cx="0.36" cy="0.3" r="0.78"><stop offset="0" stop-color="#26357a"/><stop offset="0.55" stop-color="#131b44"/><stop offset="1" stop-color="#080c20"/></radialGradient>
   <radialGradient id="atmo" cx="${G.cx}" cy="${G.cy}" r="${G.R + 30}" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.indigo}" stop-opacity="0"/><stop offset="${n((G.R - 8) / (G.R + 30) * 100)}%" stop-color="${C.indigo}" stop-opacity="0"/><stop offset="${n(G.R / (G.R + 30) * 100)}%" stop-color="${C.cyan}" stop-opacity="0.38"/><stop offset="100%" stop-color="${C.violet}" stop-opacity="0"/></radialGradient>
   <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${C.cyan}"/><stop offset="1" stop-color="${C.violet}"/></linearGradient>
-  <linearGradient id="front" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${C.sky}"/><stop offset="1" stop-color="${C.indigo2}"/></linearGradient>
+  <linearGradient id="front" x1="${G.cx - G.R}" y1="${G.cy - G.R}" x2="${G.cx + G.R}" y2="${G.cy + G.R}" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.sky}"/><stop offset="1" stop-color="${C.indigo2}"/></linearGradient>
+  <radialGradient id="aurora1"><stop offset="0" stop-color="${C.violet}" stop-opacity="0.2"/><stop offset="1" stop-color="${C.violet}" stop-opacity="0"/></radialGradient>
+  <radialGradient id="aurora2"><stop offset="0" stop-color="${C.cyan}" stop-opacity="0.13"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></radialGradient>
   <radialGradient id="floorShadow"><stop offset="0" stop-color="${C.indigo}" stop-opacity="0.5"/><stop offset="1" stop-color="${C.indigo}" stop-opacity="0"/></radialGradient>
   <linearGradient id="hz" x1="0" y1="0" x2="${W}" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.cyan}" stop-opacity="0"/><stop offset="${n(G.cx / W * 100)}%" stop-color="${C.cyan}" stop-opacity="0.75"/><stop offset="100%" stop-color="${C.violet}" stop-opacity="0.1"/></linearGradient>
   <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${C.indigo}" stop-opacity="0"/><stop offset="1" stop-color="${C.indigo}" stop-opacity="0.14"/></linearGradient>
@@ -199,7 +263,9 @@ function hero() {
 
   let body = `<g clip-path="url(#card)">
   <rect width="${W}" height="${H}" fill="url(#bg)"/>
-  <rect width="${W}" height="${H}" fill="url(#glow)"/>`;
+  <rect width="${W}" height="${H}" fill="url(#glow)"/>
+  <ellipse cx="240" cy="120" rx="320" ry="170" fill="url(#aurora1)"><animate attributeName="cx" values="200;380;200" dur="17s" repeatCount="indefinite"/><animate attributeName="cy" values="100;170;100" dur="12s" repeatCount="indefinite"/></ellipse>
+  <ellipse cx="140" cy="330" rx="260" ry="130" fill="url(#aurora2)"><animate attributeName="cx" values="120;300;120" dur="21s" repeatCount="indefinite"/></ellipse>`;
 
   // ── star field
   body += `\n  <g fill="#dbe4ff">`;
@@ -224,6 +290,16 @@ function hero() {
   body += `</g></g>`;
   body += `\n  <line x1="0" y1="${HZ}" x2="${W}" y2="${HZ}" stroke="url(#hz)" stroke-width="1.2"/>`;
   body += `\n  <ellipse cx="${G.cx}" cy="${HZ + 30}" rx="175" ry="16" fill="url(#floorShadow)"/>`;
+
+  // ── rising light particles (nearer = bigger, faster, brighter)
+  body += `\n  <g>`;
+  for (let i = 0; i < 26; i++) {
+    const depth = rand(), x = 430 + rand() * 560, r = 0.8 + depth * 2.4, dur = 10 - depth * 5;
+    const y0 = H + 10, y1 = HZ - 150 - depth * 80, o = 0.25 + depth * 0.55, col = [C.cyan, C.violet, C.sky][i % 3];
+    const begin = `-${n(rand() * dur)}s`, drift = n((rand() - 0.5) * 40);
+    body += `<circle cx="${n(x)}" cy="0" r="${n(r)}" fill="${col}" opacity="0"><animateTransform attributeName="transform" type="translate" values="0 ${y0};${drift} ${n(y1)}" dur="${n(dur)}s" begin="${begin}" repeatCount="indefinite"/><animate attributeName="opacity" values="0;${n(o)};${n(o)};0" keyTimes="0;0.15;0.7;1" dur="${n(dur)}s" begin="${begin}" repeatCount="indefinite"/></circle>`;
+  }
+  body += `</g>`;
 
   // ── globe: atmosphere + orbit (back)
   const ORBIT = { cx: G.cx, cy: G.cy + 8, rx: G.R * 1.45, ry: G.R * 0.3, rot: -14, dur: 14 };
@@ -319,6 +395,12 @@ function hero() {
   body += node(home, true);
   body += `\n  <g transform="rotate(${ORBIT.rot} ${ORBIT.cx} ${ORBIT.cy})"><path d="M${oR} ${oA} ${oL}" fill="none" stroke="${C.violet}" stroke-opacity="0.75" stroke-width="1.4"/>${satellite(true)}</g>`;
 
+  // ── floating polyhedra
+  const float = (inner, dy, dur, begin) => `\n  <g><animateTransform attributeName="transform" type="translate" values="0 0;0 ${-dy};0 0" dur="${dur}s" begin="${begin}s" repeatCount="indefinite" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1"/>${inner}</g>`;
+  body += float(wireframe("octa", { cx: 590, cy: 74, size: 22, frames: 48, dur: 11, color: C.violet, width: 1.3, dots: true }), 8, 6, 0);
+  body += float(wireframe("icosa", { cx: 948, cy: 312, size: 19, frames: 40, dur: 15, color: C.cyan, width: 1.1, minO: 0.12 }), 6, 7, -2);
+  body += float(wireframe("tetra", { cx: 548, cy: 318, size: 13, frames: 36, dur: 9, color: C.sky, width: 1.1 }), 5, 5, -1);
+
   // ── text
   const X = 56;
   const chipW = 52 + monoW(PROFILE.status, 12, 2);
@@ -374,7 +456,7 @@ function titles() {
   const W = 1000, H = 64;
   for (const [file, idx, title, note] of TITLES) {
     const tw = capsW(title, 20, 3.5) * 1.12, nw = monoW(note, 13) * 1.1;
-    const x1 = 108 + tw + 26, x2 = W - 40 - nw - 22;
+    const iconX = 108 + tw + 30, x1 = iconX + 26, x2 = W - 40 - nw - 22;
     const defs = `
   <linearGradient id="tbg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${C.bg1}"/><stop offset="1" stop-color="${C.bg0}"/></linearGradient>
   <linearGradient id="hl" x1="${n(x1)}" y1="0" x2="${n(x2)}" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.cyan}" stop-opacity="0.7"/><stop offset="0.6" stop-color="${C.indigo}" stop-opacity="0.3"/><stop offset="1" stop-color="${C.indigo}" stop-opacity="0.05"/></linearGradient>
@@ -385,6 +467,7 @@ function titles() {
   <path d="${rr(40, 16, 50, 32, 9)}" fill="${C.card}" stroke="${C.cyan}" stroke-opacity="0.55"/>
   <text x="65" y="37" text-anchor="middle" class="mono" font-size="14" font-weight="700" fill="${C.cyan}">${idx}</text>
   <text x="108" y="39.5" class="sans" font-size="20" font-weight="800" letter-spacing="3.5" fill="${C.text}">${esc(title)}</text>
+  ${wireframe(TITLE_SHAPES[file], { cx: iconX, cy: 32, size: 11, frames: 36, dur: 8, color: C.cyan, width: 1.2, minO: 0.3, tilt: 0.55 })}
   <line x1="${n(x1)}" y1="32" x2="${n(x2)}" y2="32" stroke="url(#hl)" stroke-width="1.2"/>
   <rect y="31" width="70" height="2.2" rx="1" fill="url(#glint)" clip-path="url(#hc)"><animate attributeName="x" values="${n(x1 - 70)};${n(x2)};${n(x2)}" keyTimes="0;0.55;1" dur="4.5s" repeatCount="indefinite"/></rect>
   <text x="${W - 40}" y="37" text-anchor="end" class="mono" font-size="13" fill="${C.dim}">${esc(note)}</text>`;
@@ -394,18 +477,73 @@ function titles() {
 
 /* ═════════════════════════════ ABOUT ════════════════════════════════ */
 
+/** 3D atom: three tilted orbits spinning around the vertical axis, electrons riding them. */
+function atom(cx, cy, R) {
+  const TILT = 72 * D2R, FR = 60, EFR = 120, DUR = 14, K = 0.5523;
+  const basis = [0, 1, 2].map((i) => {
+    const a = i * 60 * D2R;
+    return [[Math.cos(a), Math.sin(a), 0], [-Math.sin(a) * Math.cos(TILT), Math.cos(a) * Math.cos(TILT), Math.sin(TILT)]];
+  });
+  const view = (p, ph) => rotX(rotY(p, TAU * ph), 0.25);
+  // an orthographically projected circle is an ellipse = affine image of a 4-arc bezier circle
+  const ellipse = (A, B) => {
+    const Q = [[1, 0], [1, K], [K, 1], [0, 1], [-K, 1], [-1, K], [-1, 0], [-1, -K], [-K, -1], [0, -1], [K, -1], [1, -K], [1, 0]]
+      .map(([c, s]) => `${n(cx + R * (A[0] * c + B[0] * s))} ${n(cy - R * (A[1] * c + B[1] * s))}`);
+    return `M${Q[0]}C${Q[1]} ${Q[2]} ${Q[3]}C${Q[4]} ${Q[5]} ${Q[6]}C${Q[7]} ${Q[8]} ${Q[9]}C${Q[10]} ${Q[11]} ${Q[12]}`;
+  };
+  let defs = `
+  <radialGradient id="nuc"><stop offset="0" stop-color="#ffffff"/><stop offset="0.45" stop-color="#61dafb"/><stop offset="1" stop-color="#2b7bb9"/></radialGradient>
+  <radialGradient id="aglow"><stop offset="0" stop-color="#61dafb" stop-opacity="0.32"/><stop offset="1" stop-color="#61dafb" stop-opacity="0"/></radialGradient>
+  <radialGradient id="ashadow"><stop offset="0" stop-color="${C.indigo}" stop-opacity="0.45"/><stop offset="1" stop-color="${C.indigo}" stop-opacity="0"/></radialGradient>`;
+  let orbits = "";
+  basis.forEach(([u, w], i) => {
+    const d = [];
+    for (let f = 0; f <= FR; f++) d.push(ellipse(view(u, f / FR), view(w, f / FR)));
+    defs += `\n  <path id="orb${i}" d="${d[0]}"><animate attributeName="d" values="${d.join(";")}" dur="${DUR}s" repeatCount="indefinite"/></path>`;
+    orbits += `<use href="#orb${i}" xlink:href="#orb${i}" stroke="#61dafb" stroke-opacity="0.16" stroke-width="7"/><use href="#orb${i}" xlink:href="#orb${i}" stroke="#61dafb" stroke-opacity="0.9" stroke-width="2.2"/>`;
+  });
+  let electrons = "";
+  basis.forEach(([u, w], i) => {
+    const tr = [], rs = [];
+    for (let f = 0; f <= EFR; f++) {
+      const ph = f / EFR, th = TAU * (3 * ph + i / 3);
+      const p = view(add(mul(u, Math.cos(th)), mul(w, Math.sin(th))), ph);
+      tr.push(`${n(cx + R * p[0])} ${n(cy - R * p[1])}`);
+      rs.push(n(3 + 2.2 * clamp((p[2] + 1) / 2, 0, 1)));
+    }
+    const rAnim = (scale) => `<animate attributeName="r" values="${rs.map((r) => n(r * scale)).join(";")}" dur="${DUR}s" repeatCount="indefinite"/>`;
+    electrons += `<g transform="translate(${tr[0]})"><animateTransform attributeName="transform" type="translate" values="${tr.join(";")}" dur="${DUR}s" repeatCount="indefinite"/><circle r="${n(rs[0] * 2.6)}" fill="#61dafb" fill-opacity="0.25">${rAnim(2.6)}</circle><circle r="${rs[0]}" fill="#e6fbff">${rAnim(1)}</circle></g>`;
+  });
+  const body = `
+  <ellipse class="ashadow" cx="${cx}" cy="${n(cy + R + 30)}" rx="${n(R * 0.85)}" ry="11" fill="url(#ashadow)"/>
+  <g class="bob">
+    <circle cx="${cx}" cy="${cy}" r="${n(R * 0.75)}" fill="url(#aglow)"/>
+    <g fill="none">${orbits}</g>
+    <circle cx="${cx}" cy="${cy}" r="13" fill="url(#nuc)"><animate attributeName="r" values="12;14.5;12" dur="2.4s" repeatCount="indefinite"/></circle>
+    ${electrons}
+  </g>
+  <text x="${cx}" y="${n(cy + R + 66)}" text-anchor="middle" class="mono" font-size="13" fill="${C.dim}">&lt;Sagor /&gt;</text>`;
+  const css = `
+  .bob { animation: bob 6s ease-in-out infinite alternate; }
+  .ashadow { transform-box: fill-box; transform-origin: center; animation: ashadow 6s ease-in-out infinite alternate; }
+  @keyframes bob { from { transform: translateY(6px); } to { transform: translateY(-8px); } }
+  @keyframes ashadow { from { transform: scale(1); opacity: 1; } to { transform: scale(.72); opacity: .55; } }`;
+  return { defs, body, css };
+}
+
 function about() {
-  const W = 1000, EX = 40, EY = 56, EW = 920, LH = 28, BAR = 48, STATUS = 28;
+  const W = 1000, EX = 40, EY = 56, EW = 650, LH = 28, BAR = 48, STATUS = 28, FS = 14, CW = 8.4;
   const EH = BAR + 30 + ABOUT_CODE.length * LH + 18 + STATUS;
   const H = EY + EH + 34;
   const P = panel(W, H);
+  const A = atom(EX + EW + (W - 40 - EX - EW) / 2, EY + EH / 2 - 16, 96);
   const TOK = { cm: C.dim, kw: "#c792ea", vr: "#82aaff", ty: "#ffcb6b", pr: C.sky, st: "#c3e88d", bo: "#f78c6c", pn: C.muted };
-  const defs = P.defs + `
+  let defs = P.defs + A.defs + `
   <linearGradient id="ed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d142e"/><stop offset="1" stop-color="#0a1024"/></linearGradient>
   <clipPath id="edclip"><path d="${rr(EX, EY, EW, EH, 16)}"/></clipPath>`;
   let body = P.body + `
-  <path d="${rr(EX + 60, EY - 26, EW - 120, 120, 14)}" fill="${C.card}" fill-opacity="0.35" stroke="${C.line2}" stroke-opacity="0.5"/>
-  <path d="${rr(EX + 30, EY - 13, EW - 60, 120, 15)}" fill="${C.card}" fill-opacity="0.6" stroke="${C.line2}" stroke-opacity="0.7"/>
+  <path d="${rr(EX + 50, EY - 26, EW - 100, 120, 14)}" fill="${C.card}" fill-opacity="0.35" stroke="${C.line2}" stroke-opacity="0.5"/>
+  <path d="${rr(EX + 25, EY - 13, EW - 50, 120, 15)}" fill="${C.card}" fill-opacity="0.6" stroke="${C.line2}" stroke-opacity="0.7"/>
   <path d="${rr(EX, EY + 10, EW, EH, 16)}" fill="#000" fill-opacity="0.35"/>
   <g clip-path="url(#edclip)">
     <rect x="${EX}" y="${EY}" width="${EW}" height="${EH}" fill="url(#ed)"/>
@@ -418,48 +556,48 @@ function about() {
     <rect x="${EX + 112}" y="${EY + 22}" width="18" height="18" rx="3" fill="#3178c6"/>
     <text x="${EX + 121}" y="${EY + 35.5}" text-anchor="middle" class="sans" font-size="9" font-weight="800" fill="#fff">TS</text>
     <text x="${EX + 140}" y="${EY + 35.5}" class="mono" font-size="13" fill="${C.sub}">about.ts</text>
-    <text x="${EX + EW - 24}" y="${EY + 29}" text-anchor="end" class="mono" font-size="12" fill="${C.dim}">TypeScript · UTF-8</text>`;
+    <text x="${EX + EW - 22}" y="${EY + 29}" text-anchor="end" class="mono" font-size="12" fill="${C.dim}">TypeScript · UTF-8</text>`;
 
-  const codeX = EX + 74, y0 = EY + BAR + 34;
+  // code types itself in, character by character (textLength pins every glyph to the grid)
+  const codeX = EX + 62, y0 = EY + BAR + 34;
+  let t = 0.6;
+  const cur = [];
+  let lines = "";
   ABOUT_CODE.forEach((tokens, i) => {
-    const y = y0 + i * LH, delay = (0.3 + i * 0.14).toFixed(2);
-    const spans = tokens.map(([t, s]) => `<tspan fill="${TOK[t]}"${t === "cm" ? ` font-style="italic"` : ""}>${esc(s)}</tspan>`).join("");
-    body += `\n    <text x="${EX + 50}" y="${y}" text-anchor="end" class="mono" font-size="14" fill="${C.dim}">${i + 1}</text>`;
-    body += `\n    <text x="${codeX}" y="${y}" xml:space="preserve" class="mono ln" style="animation-delay:${delay}s" font-size="15">${spans}</text>`;
+    const y = y0 + i * LH, text = tokens.map((tk) => tk[1]).join("");
+    const lead = text.length - text.trimStart().length, typed = text.length - lead;
+    const dur = Math.max(0.12, typed * 0.024);
+    const vals = [], kts = [];
+    for (let c = 0; c <= typed; c++) { vals.push(n((lead + c) * CW + (c === typed ? 16 : 4))); kts.push((c / typed).toFixed(4)); }
+    defs += `\n  <clipPath id="l${i}"><rect x="${codeX - 4}" y="${y - 19}" height="${LH}" width="${n(lead * CW + 4)}"><animate attributeName="width" values="${vals.join(";")}" keyTimes="${kts.join(";")}" calcMode="discrete" begin="${t.toFixed(2)}s" dur="${dur.toFixed(2)}s" fill="freeze"/></rect></clipPath>`;
+    const spans = tokens.map(([tk, s]) => `<tspan fill="${TOK[tk]}"${tk === "cm" ? ` font-style="italic"` : ""}>${esc(s)}</tspan>`).join("");
+    body += `\n    <text x="${EX + 44}" y="${y}" text-anchor="end" class="mono" font-size="13" fill="${C.dim}">${i + 1}</text>`;
+    lines += `\n    <text x="${codeX}" y="${y}" xml:space="preserve" textLength="${n(text.length * CW)}" lengthAdjust="spacing" clip-path="url(#l${i})" class="mono" font-size="${FS}">${spans}</text>`;
+    for (let c = 0; c <= typed; c++) cur.push([t + (c * dur) / typed, codeX + (lead + c) * CW + 1, y]);
+    t += dur + 0.14;
   });
-  const lastY = y0 + (ABOUT_CODE.length - 1) * LH;
-  const endDelay = (0.3 + ABOUT_CODE.length * 0.14).toFixed(2);
-  body += `\n    <rect x="${codeX + monoW("};", 15) + 3}" y="${lastY - 15}" width="9" height="19" rx="1.5" fill="${C.cyan}" class="ln" style="animation-delay:${endDelay}s"><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.5;0.5;1" dur="1s" repeatCount="indefinite"/></rect>`;
-
-  // minimap
-  const mmX = EX + EW - 84;
-  body += `\n    <rect x="${mmX - 6}" y="${y0 - 22}" width="72" height="${ABOUT_CODE.length * 6 + 12}" rx="4" fill="#ffffff" fill-opacity="0.04"/>`;
-  ABOUT_CODE.forEach((tokens, i) => {
-    let x = mmX;
-    tokens.forEach(([t, s]) => {
-      const w = s.trimStart().length * 0.9, lead = (s.length - s.trimStart().length) * 0.9;
-      x += lead;
-      if (w > 0) body += `<rect x="${n(x)}" y="${y0 - 16 + i * 6}" width="${n(w)}" height="3" rx="1" fill="${TOK[t]}" fill-opacity="0.7"/>`;
-      x += w;
-    });
-  });
+  const total = t;
+  cur.unshift([0, cur[0][1], cur[0][2]]);
+  const kt = cur.map(([tt]) => (tt / total).toFixed(4)).join(";");
+  const anim = (attr, vals) => `<animate attributeName="${attr}" values="${vals}" keyTimes="${kt}" calcMode="discrete" dur="${total.toFixed(2)}s" fill="freeze"/>`;
+  body += `\n    <rect x="${EX}" y="${y0 - 19}" width="${EW}" height="${LH}" fill="#ffffff" fill-opacity="0.035">${anim("y", cur.map((c) => c[2] - 19).join(";"))}</rect>`;
+  body += lines;
+  body += `\n    <rect x="${n(cur[0][1])}" y="${y0 - 14}" width="8" height="18" rx="1.5" fill="${C.cyan}">${anim("x", cur.map((c) => n(c[1])).join(";"))}${anim("y", cur.map((c) => c[2] - 14).join(";"))}<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.5;0.5;1" dur="1s" repeatCount="indefinite"/></rect>`;
 
   // status bar
   const sy = EY + EH - STATUS;
   body += `
     <rect x="${EX}" y="${sy}" width="${EW}" height="${STATUS}" fill="#0f1733"/>
     <line x1="${EX}" y1="${sy}" x2="${EX + EW}" y2="${sy}" stroke="${C.line2}"/>
-    <circle cx="${EX + 22}" cy="${sy + 14}" r="4" fill="${C.green}"/>
+    <circle cx="${EX + 22}" cy="${sy + 14}" r="4" fill="${C.green}"><animate attributeName="opacity" values="1;0.35;1" dur="2s" repeatCount="indefinite"/></circle>
     <text x="${EX + 34}" y="${sy + 18.5}" xml:space="preserve" class="mono" font-size="12" fill="${C.muted}">main   ✓ 0 problems</text>
-    <text x="${EX + EW - 20}" y="${sy + 18.5}" text-anchor="end" xml:space="preserve" class="mono" font-size="12" fill="${C.muted}">Ln ${ABOUT_CODE.length}, Col 3   Spaces: 2   TypeScript</text>
+    <text x="${EX + EW - 20}" y="${sy + 18.5}" text-anchor="end" xml:space="preserve" class="mono" font-size="12" fill="${C.muted}">Ln ${ABOUT_CODE.length}, Col 3   TypeScript</text>
   </g>
   <path d="${rr(EX, EY, EW, EH, 16)}" fill="none" stroke="${C.line2}" stroke-width="1.2"/>`;
+  body += A.body;
 
-  const css = `
-  .ln { animation: ln .55s cubic-bezier(.2,.8,.2,1) both; }
-  @keyframes ln { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }`;
   const label = "About me: Full Stack Developer at Softs.Ai, based in Mymensingh, Bangladesh. Stack: React, Next.js, TypeScript, Node.js, MongoDB. Learning advanced React patterns and API architecture. Open to work.";
-  write("about.svg", svgDoc(W, H, label, defs, body, css));
+  write("about.svg", svgDoc(W, H, label, defs, body, A.css));
 }
 
 /* ═════════════════════════ TECH STACK (3D keys) ═════════════════════ */
@@ -497,10 +635,18 @@ function stack() {
   <linearGradient id="side" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#151b3a"/><stop offset="1" stop-color="#070a18"/></linearGradient>
   <linearGradient id="top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a3463"/><stop offset="1" stop-color="#1a2147"/></linearGradient>
   <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1022"/><stop offset="1" stop-color="#080c1a"/></linearGradient>
-  <linearGradient id="spaceGlow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${C.cyan}"/><stop offset="0.5" stop-color="${C.violet}"/><stop offset="1" stop-color="${C.amber}"/></linearGradient>`;
+  <linearGradient id="spaceGlow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${C.cyan}"/><stop offset="0.5" stop-color="${C.violet}"/><stop offset="1" stop-color="${C.amber}"/></linearGradient>
+  <linearGradient id="rgbEdge" x1="0" y1="0" x2="500" y2="0" gradientUnits="userSpaceOnUse" spreadMethod="reflect">
+    ${RGB.slice(0, -1).map((c, i, a) => `<stop offset="${n((i / (a.length - 1)) * 100)}%" stop-color="${c}"/>`).join("")}
+    <animateTransform attributeName="gradientTransform" type="translate" values="0 0;1000 0" dur="8s" repeatCount="indefinite"/>
+  </linearGradient>
+  <radialGradient id="under" cx="0.5" cy="0" r="0.6"><stop offset="0" stop-color="${C.violet}" stop-opacity="0.35"/><stop offset="1" stop-color="${C.violet}" stop-opacity="0"/></radialGradient>`;
   let body = P.body + `
+  <ellipse cx="${W / 2}" cy="${PY + PH + 12}" rx="${PW * 0.55}" ry="44" fill="url(#under)"><animate attributeName="opacity" values="0.6;1;0.6" dur="4s" repeatCount="indefinite"/></ellipse>
   <path d="${rr(PX, PY + 12, PW, PH, 18)}" fill="#03050c"/>
+  <path d="${rr(PX, PY + 12, PW, PH, 18)}" fill="none" stroke="url(#rgbEdge)" stroke-opacity="0.55" stroke-width="2"/>
   <path d="${rr(PX, PY, PW, PH, 18)}" fill="url(#plate)" stroke="${C.line2}"/>
+  <path d="${rr(PX, PY, PW, PH, 18)}" fill="none" stroke="url(#rgbEdge)" stroke-opacity="0.35" stroke-width="1.2"/>
   <path d="${rr(PX + 1, PY + 1, PW - 2, 3, 1.5)}" fill="#ffffff" fill-opacity="0.04"/>`;
 
   keys.forEach((k, i) => {
@@ -511,6 +657,7 @@ function stack() {
   <g>
     <path d="${rr(k.x + 2, k.y + 7, k.w, KH, 11)}" fill="#000" fill-opacity="0.45"/>
     <path d="${rr(k.x, k.y, k.w, KH, 11)}" fill="url(#side)" stroke="#232c55"/>
+    <rect x="${n(k.x + 10)}" y="${KH + k.y - 6}" width="${n(k.w - 20)}" height="3" rx="1.5" fill="${RGB[0]}" opacity="0.85"><animate attributeName="fill" values="${RGB.join(";")}" dur="6s" begin="-${n((1 - (k.x + k.w / 2) / W) * 6 + (k.y / 400) * 1.2)}s" repeatCount="indefinite"/></rect>
     <g class="cap" style="animation-delay:${delay.toFixed(2)}s">
       <path d="${rr(tx, ty, tw, th, 9)}" fill="url(#top)" stroke="#ffffff" stroke-opacity="0.07"/>
       <path d="${rr(tx, ty, tw, th, 9)}" fill="${accent}" class="lit" style="animation-delay:${delay.toFixed(2)}s"/>
@@ -544,7 +691,9 @@ function stack() {
 
 function skills() {
   const W = 1000, COLX = [60, 370, 680], COLW = 260, D = 7, BH = 11, ROW = 44, TOP = 58;
-  let defs = "", body = "", maxY = 0, delay = 0;
+  let defs = `
+  <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="0.5" stop-color="#fff" stop-opacity="0.55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>`;
+  let body = "", maxY = 0, delay = 0;
   SKILLS.forEach((g, gi) => {
     defs += `
   <linearGradient id="f${gi}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${g.from}"/><stop offset="1" stop-color="${g.to}"/></linearGradient>`;
@@ -558,18 +707,24 @@ function skills() {
     g.items.forEach(([name, p]) => {
       const full = COLW - D - 2, w = (full * p) / 100, by = y + 12;
       // a 3D prism: front face, top face (lit) and end cap (shaded)
-      const prism = (len, fill, attrs = "", lit = 0.32, shade = 0.4) => {
+      const prism = (len, fill, attrs = "", lit = 0.32, shade = 0.4, extra = "") => {
         const top = `M${x},${by + D}L${n(x + len)},${by + D}L${n(x + len + D)},${by}L${x + D},${by}Z`;
         const cap = `M${n(x + len)},${by + D}L${n(x + len + D)},${by}V${by + BH}L${n(x + len)},${by + D + BH}Z`;
         return `<g${attrs}><rect x="${x}" y="${by + D}" width="${n(len)}" height="${BH}" fill="${fill}"/>` +
           `<path d="${top}" fill="${fill}"/><path d="${top}" fill="#fff" fill-opacity="${lit}"/>` +
-          `<path d="${cap}" fill="${fill}"/><path d="${cap}" fill="#000" fill-opacity="${shade}"/></g>`;
+          `<path d="${cap}" fill="${fill}"/><path d="${cap}" fill="#000" fill-opacity="${shade}"/>${extra}</g>`;
       };
+      // a soft light that sweeps along the filled bar every few seconds
+      const id = `s${Math.round(delay * 100)}`;
+      defs += `\n  <clipPath id="${id}"><path d="M${x},${by + D}L${x + D},${by}H${n(x + w + D)}V${by + BH}L${n(x + w)},${by + D + BH}H${x}Z"/></clipPath>`;
+      const sk = 0.47; // skew around the bar's own centre line
+      const shine = `<g clip-path="url(#${id})"><rect y="${by - 2}" width="46" height="${BH + D + 4}" fill="url(#shine)" transform="matrix(1 0 ${-sk} 1 ${n(sk * (by + (BH + D) / 2))} 0)"><animate attributeName="x" values="${n(x - 60)};${n(x + w + 60)};${n(x + w + 60)}" keyTimes="0;0.3;1" dur="5s" begin="${n(1.6 + delay * 1.6)}s" repeatCount="indefinite"/></rect></g>`;
       body += `
     <text x="${x}" y="${y}" class="sans" font-size="15" font-weight="600" fill="${C.text}">${esc(name)}</text>
     <text x="${x + COLW}" y="${y}" text-anchor="end" class="mono" font-size="13" font-weight="700" fill="${g.from}">${p}%</text>
     ${prism(full, "#151c3c", "", 0.07, 0.3)}
-    ${prism(w, `url(#f${gi})`, ` class="grow" style="animation-delay:${delay.toFixed(2)}s"`)}`;
+    ${prism(w, `url(#f${gi})`, ` class="grow" style="animation-delay:${delay.toFixed(2)}s"`, 0.32, 0.4)}
+    ${shine}`;
       y += ROW;
       delay += 0.07;
     });
@@ -615,9 +770,11 @@ function experience() {
   <line x1="${x}" y1="${LY + 10}" x2="${x}" y2="${CY}" stroke="${e.color}" stroke-opacity="0.5" stroke-dasharray="3 4"/>
   <circle cx="${x}" cy="${LY}" r="9" fill="${C.bg1}" stroke="${e.color}" stroke-width="2"/>
   <circle cx="${x}" cy="${LY}" r="3.5" fill="${e.color}"/>`;
-    if (e.current) body += `<circle cx="${x}" cy="${LY}" r="9" fill="none" stroke="${C.green}"><animate attributeName="r" values="9;22" dur="2s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values="0.8;0" dur="2s" repeatCount="indefinite"/></circle>`;
+    // spinning rings read as a 3D gyroscope around each node
+    body += `<ellipse cx="${x}" cy="${LY}" rx="15" ry="15" fill="none" stroke="${e.color}" stroke-opacity="0.55" stroke-width="1.2"><animate attributeName="rx" values="15;1.5;15" dur="${n(2.6 + i * 0.4)}s" repeatCount="indefinite"/></ellipse>`;
+    if (e.current) body += `<ellipse cx="${x}" cy="${LY}" rx="15" ry="15" fill="none" stroke="${C.green}" stroke-opacity="0.55" stroke-width="1.2"><animate attributeName="ry" values="15;1.5;15" dur="3.3s" repeatCount="indefinite"/></ellipse><circle cx="${x}" cy="${LY}" r="9" fill="none" stroke="${C.green}"><animate attributeName="r" values="9;26" dur="2s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values="0.8;0" dur="2s" repeatCount="indefinite"/></circle>`;
     body += `
-  <g class="rise" style="animation-delay:${(0.2 + i * 0.18).toFixed(2)}s">
+  <g class="rise" style="animation-delay:${(0.2 + i * 0.18).toFixed(2)}s"><g class="float" style="animation-delay:-${n(i * 1.3)}s">
     <path d="${rr(cx, CY + 8, CW, CH, 14)}" fill="#000" fill-opacity="0.3"/>
     <path d="${rr(cx, CY, CW, CH, 14)}" fill="${C.card}" stroke="${e.current ? C.green : C.line2}" stroke-opacity="${e.current ? 0.6 : 1}"/>
     <rect x="${cx + 22}" y="${CY}" width="44" height="3" rx="1.5" fill="${e.color}"/>
@@ -632,12 +789,14 @@ function experience() {
       body += `<path d="${rr(tx, CY + 92, w, 28, 8)}" fill="#ffffff" fill-opacity="0.04" stroke="${C.line2}"/><text x="${n(tx + w / 2)}" y="${CY + 110.5}" text-anchor="middle" class="mono" font-size="12" fill="${C.sub}">${esc(t)}</text>`;
       tx += w + 6;
     });
-    body += `\n  </g>`;
+    body += `\n  </g></g>`;
   });
 
   const css = `
   .rise { animation: rise .8s cubic-bezier(.2,.8,.2,1) both; }
-  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }`;
+  .float { animation: float 3.9s ease-in-out infinite alternate; }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes float { from { transform: translateY(2px); } to { transform: translateY(-6px); } }`;
   const label = "Experience — " + EXPERIENCE.map((e) => `${e.period}: ${e.title}, ${e.org}${e.tags.length ? ` (${e.tags.join(", ")})` : ""}`).join(". ");
   write("experience.svg", svgDoc(W, H, label, defs, body, css));
 }
@@ -663,7 +822,7 @@ function buttons() {
   <path d="${rr(2, 2, W - 4, H - 8, 15)}" fill="url(#side)" stroke="#232c55"/>
   <path d="${rr(8, 5, W - 16, H - 24, 12)}" fill="url(#top)" stroke="#ffffff" stroke-opacity="0.08"/>
   <path d="M20,6.5H${W - 20}" stroke="#fff" stroke-opacity="0.14"/>
-  <rect x="8" y="${H - 22}" width="${W - 16}" height="2" fill="${b.color}" fill-opacity="0.55"/>
+  <rect x="14" y="${H - 21}" width="${W - 28}" height="3" rx="1.5" fill="${b.color}" fill-opacity="0.55"><animate attributeName="fill-opacity" values="0.3;0.95;0.3" dur="2.8s" begin="${n(i * 0.5)}s" repeatCount="indefinite"/></rect>
   ${ICONS[b.icon](b.color)}
   <text x="62" y="39" class="sans" font-size="18" font-weight="700" fill="${C.text}">${esc(b.label)}</text>
   <path d="M${W - 42},33 l8,-8 M${W - 42},25 h8 v8" stroke="${C.muted}" stroke-width="2" fill="none" stroke-linecap="round"/>
@@ -674,41 +833,107 @@ function buttons() {
 
 /* ═════════════════════════════ FOOTER ═══════════════════════════════ */
 
-function footer() {
-  const W = 1000, H = 220;
-  const P = panel(W, H);
+/**
+ * 4D hypercube: rotate in the XW plane, project 4D → 3D → 2D. A 90° turn maps the tesseract onto
+ * itself (and the 90° Y-turn keeps its projection symmetric), so the loop is seamless.
+ */
+function tesseract(cx, cy, size, dur) {
   const V = [];
-  for (const x of [-1, 1]) for (const y of [-1, 1]) for (const z of [-1, 1]) V.push([x, y, z]);
+  for (const x of [-1, 1]) for (const y of [-1, 1]) for (const z of [-1, 1]) for (const w of [-1, 1]) V.push([x, y, z, w]);
   const E = [];
-  V.forEach((a, i) => V.forEach((b, j) => { if (j > i && Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs(a[2] - b[2]) === 2) E.push([i, j]); }));
-  const cube = (size, dir, cx, cy) => {
-    const frames = [];
-    for (let f = 0; f <= 12; f++) {
-      const t = dir * (f / 12) * (Math.PI / 2);
-      const P2 = V.map((p) => { const q = rotX(rotY(p, t), 28 * D2R); return [cx + q[0] * size, cy - q[1] * size]; });
-      frames.push(E.map(([a, b]) => `M${n(P2[a][0])} ${n(P2[a][1])}L${n(P2[b][0])} ${n(P2[b][1])}`).join(""));
-    }
-    return frames;
-  };
-  const outer = cube(30, 1, 500, 72), inner = cube(14, -1, 500, 72);
+  V.forEach((a, i) => V.forEach((b, j) => {
+    const diff = a.map((c, k) => (c !== b[k] ? k : -1)).filter((k) => k >= 0);
+    if (j > i && diff.length === 1) E.push([i, j, diff[0]]);
+  }));
+  const FR = 40, F = [];
+  for (let f = 0; f <= FR; f++) {
+    const a = (f / FR) * (Math.PI / 2);
+    F.push(V.map(([x, y, z, w]) => {
+      const x1 = x * Math.cos(a) - w * Math.sin(a), w1 = x * Math.sin(a) + w * Math.cos(a);
+      const k = 3 / (3 - w1);
+      const p = rotX(rotY([x1 * k, y * k, z * k], a), 0.5).map((c) => c / 2.2);
+      return persp(p, cx, cy, size, 4);
+    }));
+  }
+  let out = `<g fill="none" stroke-linecap="round">`;
+  for (const [a, b, axis] of E) {
+    const d = F.map((P) => `M${n(P[a][0])} ${n(P[a][1])}L${n(P[b][0])} ${n(P[b][1])}`);
+    const o = F.map((P) => n(0.22 + 0.78 * clamp(((P[a][2] + P[b][2]) / 2 + 1) / 2, 0, 1)));
+    out += `<path d="${d[0]}" stroke="${axis === 3 ? C.violet : C.cyan}" stroke-width="${axis === 3 ? 1.1 : 1.5}" stroke-opacity="${o[0]}"><animate attributeName="d" values="${d.join(";")}" dur="${dur}s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values="${o.join(";")}" dur="${dur}s" repeatCount="indefinite"/></path>`;
+  }
+  out += `</g>`;
+  V.forEach((_, i) => {
+    const t = F.map((P) => `${n(P[i][0])} ${n(P[i][1])}`);
+    out += `<g transform="translate(${t[0]})"><animateTransform attributeName="transform" type="translate" values="${t.join(";")}" dur="${dur}s" repeatCount="indefinite"/><circle r="5" fill="${C.violet}" fill-opacity="0.22"/><circle r="1.9" fill="#f5f3ff"/></g>`;
+  });
+  return out;
+}
+
+function footer() {
+  const W = 1000, H = 244, TX = 500, TY = 86;
+  const P = panel(W, H);
+  const rand = rng(23);
   const defs = P.defs + `
-  <linearGradient id="cube" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${C.cyan}"/><stop offset="1" stop-color="${C.violet}"/></linearGradient>
-  <radialGradient id="cglow" cx="500" cy="72" r="80" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.indigo}" stop-opacity="0.35"/><stop offset="1" stop-color="${C.indigo}" stop-opacity="0"/></radialGradient>
-  <linearGradient id="fl" x1="200" y1="0" x2="800" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.cyan}" stop-opacity="0"/><stop offset="0.5" stop-color="${C.violet}"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></linearGradient>`;
-  const body = P.body + `
-  <circle cx="500" cy="72" r="80" fill="url(#cglow)"/>
-  <path d="${outer[0]}" fill="none" stroke="url(#cube)" stroke-width="1.6" stroke-linecap="round"><animate attributeName="d" values="${outer.join(";")}" dur="4s" repeatCount="indefinite"/></path>
-  <path d="${inner[0]}" fill="none" stroke="${C.sky}" stroke-opacity="0.8" stroke-width="1.2" stroke-linecap="round"><animate attributeName="d" values="${inner.join(";")}" dur="4s" repeatCount="indefinite"/></path>
-  <text x="500" y="152" text-anchor="middle" class="sans" font-size="26" font-weight="800" fill="${C.text}">Thanks for stopping by.</text>
-  <text x="500" y="182" text-anchor="middle" class="sans" font-size="16" fill="${C.muted}">Let’s build something great together.</text>
-  <line x1="200" y1="203" x2="800" y2="203" stroke="url(#fl)" stroke-width="1.2" stroke-dasharray="600" stroke-dashoffset="600"><animate attributeName="stroke-dashoffset" values="600;0;0;-600" keyTimes="0;0.4;0.6;1" dur="6s" repeatCount="indefinite"/></line>`;
+  <radialGradient id="cglow" cx="${TX}" cy="${TY}" r="110" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.indigo}" stop-opacity="0.4"/><stop offset="1" stop-color="${C.indigo}" stop-opacity="0"/></radialGradient>
+  <linearGradient id="fl" x1="200" y1="0" x2="800" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.cyan}" stop-opacity="0"/><stop offset="0.5" stop-color="${C.violet}"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></linearGradient>
+  <linearGradient id="thanks" x1="330" y1="0" x2="670" y2="0" gradientUnits="userSpaceOnUse" spreadMethod="reflect"><stop offset="0" stop-color="${C.text}"/><stop offset="0.5" stop-color="${C.sky}"/><stop offset="1" stop-color="${C.violet}"/><animateTransform attributeName="gradientTransform" type="translate" values="0 0;680 0" dur="8s" repeatCount="indefinite"/></linearGradient>`;
+  let body = P.body;
+  for (let i = 0; i < 46; i++) {
+    const x = 20 + rand() * (W - 40), y = 16 + rand() * (H - 32), o = 0.15 + rand() * 0.5;
+    body += `<circle cx="${n(x)}" cy="${n(y)}" r="${n(0.5 + rand())}" fill="#dbe4ff" opacity="${n(o)}"><animate attributeName="opacity" values="${n(o)};${n(o * 0.15)};${n(o)}" dur="${n(2 + rand() * 4)}s" begin="-${n(rand() * 5)}s" repeatCount="indefinite"/></circle>`;
+  }
+  body += `
+  <circle cx="${TX}" cy="${TY}" r="110" fill="url(#cglow)"><animate attributeName="r" values="100;120;100" dur="5s" repeatCount="indefinite"/></circle>
+  ${tesseract(TX, TY, 33, 7)}
+  <text x="500" y="176" text-anchor="middle" class="sans" font-size="27" font-weight="800" fill="url(#thanks)">Thanks for stopping by.</text>
+  <text x="500" y="205" text-anchor="middle" class="sans" font-size="16" fill="${C.muted}">Let’s build something great together.</text>
+  <line x1="200" y1="226" x2="800" y2="226" stroke="url(#fl)" stroke-width="1.2" stroke-dasharray="600" stroke-dashoffset="600"><animate attributeName="stroke-dashoffset" values="600;0;0;-600" keyTimes="0;0.4;0.6;1" dur="6s" repeatCount="indefinite"/></line>`;
   write("footer.svg", svgDoc(W, H, "Thanks for stopping by. Let's build something great together.", defs, body));
+}
+
+/* ═════════════════════════════ MARQUEE ══════════════════════════════ */
+
+function marquee() {
+  const W = 1000, H = 132, CY = 66;
+  const band = (items, { angle, h, size, dir, speed, fill, textFill, stroke, shadow }) => {
+    let x = 0, parts = "";
+    const gap = 26, dia = 9;
+    for (const it of items) {
+      const w = capsW(it, size, 2.5);
+      parts += `<text x="${n(x)}" y="${n(size * 0.36)}" textLength="${n(w)}" lengthAdjust="spacingAndGlyphs" class="sans" font-size="${size}" font-weight="800" letter-spacing="2.5" fill="${textFill}">${esc(it)}</text>`;
+      x += w + gap;
+      parts += `<rect x="${n(x)}" y="${-dia / 2}" width="${dia}" height="${dia}" rx="1.5" transform="rotate(45 ${n(x + dia / 2)} 0)" fill="${textFill}" fill-opacity="0.75"/>`;
+      x += dia + gap;
+    }
+    const L = x, reps = Math.ceil((W + 400) / L) + 1;
+    let row = "";
+    for (let r = 0; r < reps; r++) row += `<g transform="translate(${n(r * L)} 0)">${parts}</g>`;
+    const [from, to] = dir < 0 ? [0, -L] : [-L, 0];
+    return `
+  <g transform="rotate(${angle} ${W / 2} ${CY})">
+    ${shadow ? `<rect x="-200" y="${CY - h / 2 + 9}" width="${W + 400}" height="${h}" fill="#000" fill-opacity="0.4"/>` : ""}
+    <rect x="-200" y="${CY - h / 2}" width="${W + 400}" height="${h}" fill="${fill}"${stroke ? ` stroke="${stroke}" stroke-width="1.5"` : ""}/>
+    <rect x="-200" y="${CY - h / 2}" width="${W + 400}" height="1.5" fill="#fff" fill-opacity="0.28"/>
+    <rect x="-200" y="${CY + h / 2 - 3}" width="${W + 400}" height="3" fill="#000" fill-opacity="0.22"/>
+    <g transform="translate(-200 ${CY})"><g><animateTransform attributeName="transform" type="translate" values="${n(from)} 0;${n(to)} 0" dur="${n(L / speed)}s" repeatCount="indefinite"/>${row}</g></g>
+  </g>`;
+  };
+  const defs = `
+  <linearGradient id="tape" x1="0" y1="0" x2="600" y2="0" gradientUnits="userSpaceOnUse" spreadMethod="reflect">
+    <stop offset="0" stop-color="${C.cyan}"/><stop offset="0.5" stop-color="${C.indigo2}"/><stop offset="1" stop-color="${C.violet}"/>
+    <animateTransform attributeName="gradientTransform" type="translate" values="0 0;1200 0" dur="10s" repeatCount="indefinite"/>
+  </linearGradient>`;
+  const body =
+    band(MARQUEE.back, { angle: 3.2, h: 42, size: 15, dir: 1, speed: 38, fill: C.card, textFill: C.muted, stroke: C.line2 }) +
+    band(MARQUEE.front, { angle: -2.6, h: 50, size: 19, dir: -1, speed: 55, fill: "url(#tape)", textFill: "#070b17", shadow: true });
+  write("marquee.svg", svgDoc(W, H, [...MARQUEE.front, ...MARQUEE.back].join(" · "), defs, body));
 }
 
 /* ═══════════════════════════════ RUN ════════════════════════════════ */
 
 console.log("Generating README assets…");
 hero();
+marquee();
 titles();
 about();
 stack();

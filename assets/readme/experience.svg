@@ -5,7 +5,9 @@
   .mono { font-family: ui-monospace, SFMono-Regular, 'SF Mono', 'Cascadia Code', Consolas, 'Liberation Mono', Menlo, monospace; }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
   .rise { animation: rise .8s cubic-bezier(.2,.8,.2,1) both; }
+  .float { animation: float 3.9s ease-in-out infinite alternate; }
   @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes float { from { transform: translateY(2px); } to { transform: translateY(-6px); } }
 </style>
 <defs>
   <linearGradient id="pn-bg" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#0c1328"/><stop offset="1" stop-color="#070b17"/></linearGradient>
@@ -26,34 +28,34 @@
   <text x="190" y="82" text-anchor="middle" class="mono" font-size="13" font-weight="700" letter-spacing="1.5" fill="#8a93b8">JUL 2023 — OCT 2024</text>
   <line x1="190" y1="118" x2="190" y2="146" stroke="#22d3ee" stroke-opacity="0.5" stroke-dasharray="3 4"/>
   <circle cx="190" cy="108" r="9" fill="#0c1328" stroke="#22d3ee" stroke-width="2"/>
-  <circle cx="190" cy="108" r="3.5" fill="#22d3ee"/>
-  <g class="rise" style="animation-delay:0.20s">
+  <circle cx="190" cy="108" r="3.5" fill="#22d3ee"/><ellipse cx="190" cy="108" rx="15" ry="15" fill="none" stroke="#22d3ee" stroke-opacity="0.55" stroke-width="1.2"><animate attributeName="rx" values="15;1.5;15" dur="2.6s" repeatCount="indefinite"/></ellipse>
+  <g class="rise" style="animation-delay:0.20s"><g class="float" style="animation-delay:-0s">
     <path d="M64,154H316A14,14 0 0 1 330,168V290A14,14 0 0 1 316,304H64A14,14 0 0 1 50,290V168A14,14 0 0 1 64,154Z" fill="#000" fill-opacity="0.3"/>
     <path d="M64,146H316A14,14 0 0 1 330,160V282A14,14 0 0 1 316,296H64A14,14 0 0 1 50,282V160A14,14 0 0 1 64,146Z" fill="#0e1530" stroke="#26305a" stroke-opacity="1"/>
     <rect x="72" y="146" width="44" height="3" rx="1.5" fill="#22d3ee"/>
     <text x="72" y="190" class="sans" font-size="19" font-weight="800" fill="#e8ebf8">Frontend Developer</text>
     <text x="72" y="216" class="sans" font-size="15" font-weight="600" fill="#22d3ee">TechnoGenix Solutions</text><path d="M80,238H116A8,8 0 0 1 124,246V258A8,8 0 0 1 116,266H80A8,8 0 0 1 72,258V246A8,8 0 0 1 80,238Z" fill="#ffffff" fill-opacity="0.04" stroke="#26305a"/><text x="98" y="256.5" text-anchor="middle" class="mono" font-size="12" fill="#c3c9e6">React</text><path d="M138,238H224.4A8,8 0 0 1 232.4,246V258A8,8 0 0 1 224.4,266H138A8,8 0 0 1 130,258V246A8,8 0 0 1 138,238Z" fill="#ffffff" fill-opacity="0.04" stroke="#26305a"/><text x="181.2" y="256.5" text-anchor="middle" class="mono" font-size="12" fill="#c3c9e6">Tailwind CSS</text><path d="M246.4,238H304A8,8 0 0 1 312,246V258A8,8 0 0 1 304,266H246.4A8,8 0 0 1 238.4,258V246A8,8 0 0 1 246.4,238Z" fill="#ffffff" fill-opacity="0.04" stroke="#26305a"/><text x="275.2" y="256.5" text-anchor="middle" class="mono" font-size="12" fill="#c3c9e6">REST API</text>
-  </g>
+  </g></g>
   <text x="500" y="82" text-anchor="middle" class="mono" font-size="13" font-weight="700" letter-spacing="1.5" fill="#8a93b8">NOV 2024 — JUN 2025</text>
   <line x1="500" y1="118" x2="500" y2="146" stroke="#a78bfa" stroke-opacity="0.5" stroke-dasharray="3 4"/>
   <circle cx="500" cy="108" r="9" fill="#0c1328" stroke="#a78bfa" stroke-width="2"/>
-  <circle cx="500" cy="108" r="3.5" fill="#a78bfa"/>
-  <g class="rise" style="animation-delay:0.38s">
+  <circle cx="500" cy="108" r="3.5" fill="#a78bfa"/><ellipse cx="500" cy="108" rx="15" ry="15" fill="none" stroke="#a78bfa" stroke-opacity="0.55" stroke-width="1.2"><animate attributeName="rx" values="15;1.5;15" dur="3s" repeatCount="indefinite"/></ellipse>
+  <g class="rise" style="animation-delay:0.38s"><g class="float" style="animation-delay:-1.3s">
     <path d="M374,154H626A14,14 0 0 1 640,168V290A14,14 0 0 1 626,304H374A14,14 0 0 1 360,290V168A14,14 0 0 1 374,154Z" fill="#000" fill-opacity="0.3"/>
     <path d="M374,146H626A14,14 0 0 1 640,160V282A14,14 0 0 1 626,296H374A14,14 0 0 1 360,282V160A14,14 0 0 1 374,146Z" fill="#0e1530" stroke="#26305a" stroke-opacity="1"/>
     <rect x="382" y="146" width="44" height="3" rx="1.5" fill="#a78bfa"/>
     <text x="382" y="190" class="sans" font-size="19" font-weight="800" fill="#e8ebf8">Full Stack Developer</text>
     <text x="382" y="216" class="sans" font-size="15" font-weight="600" fill="#a78bfa">Raintor</text><path d="M390,238H440.4A8,8 0 0 1 448.4,246V258A8,8 0 0 1 440.4,266H390A8,8 0 0 1 382,258V246A8,8 0 0 1 390,238Z" fill="#ffffff" fill-opacity="0.04" stroke="#26305a"/><text x="415.2" y="256.5" text-anchor="middle" class="mono" font-size="12" fill="#c3c9e6">Next.js</text><path d="M462.4,238H534.4A8,8 0 0 1 542.4,246V258A8,8 0 0 1 534.4,266H462.4A8,8 0 0 1 454.4,258V246A8,8 0 0 1 462.4,238Z" fill="#ffffff" fill-opacity="0.04" stroke="#26305a"/><text x="498.4" y="256.5" text-anchor="middle" class="mono" font-size="12" fill="#c3c9e6">Express.js</text><path d="M556.4,238H606.8A8,8 0 0 1 614.8,246V258A8,8 0 0 1 606.8,266H556.4A8,8 0 0 1 548.4,258V246A8,8 0 0 1 556.4,238Z" fill="#ffffff" fill-opacity="0.04" stroke="#26305a"/><text x="581.6" y="256.5" text-anchor="middle" class="mono" font-size="12" fill="#c3c9e6">MongoDB</text>
-  </g>
+  </g></g>
   <text x="810" y="82" text-anchor="middle" class="mono" font-size="13" font-weight="700" letter-spacing="1.5" fill="#34d399">PRESENT</text>
   <line x1="810" y1="118" x2="810" y2="146" stroke="#34d399" stroke-opacity="0.5" stroke-dasharray="3 4"/>
   <circle cx="810" cy="108" r="9" fill="#0c1328" stroke="#34d399" stroke-width="2"/>
-  <circle cx="810" cy="108" r="3.5" fill="#34d399"/><circle cx="810" cy="108" r="9" fill="none" stroke="#34d399"><animate attributeName="r" values="9;22" dur="2s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values="0.8;0" dur="2s" repeatCount="indefinite"/></circle>
-  <g class="rise" style="animation-delay:0.56s">
+  <circle cx="810" cy="108" r="3.5" fill="#34d399"/><ellipse cx="810" cy="108" rx="15" ry="15" fill="none" stroke="#34d399" stroke-opacity="0.55" stroke-width="1.2"><animate attributeName="rx" values="15;1.5;15" dur="3.4s" repeatCount="indefinite"/></ellipse><ellipse cx="810" cy="108" rx="15" ry="15" fill="none" stroke="#34d399" stroke-opacity="0.55" stroke-width="1.2"><animate attributeName="ry" values="15;1.5;15" dur="3.3s" repeatCount="indefinite"/></ellipse><circle cx="810" cy="108" r="9" fill="none" stroke="#34d399"><animate attributeName="r" values="9;26" dur="2s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values="0.8;0" dur="2s" repeatCount="indefinite"/></circle>
+  <g class="rise" style="animation-delay:0.56s"><g class="float" style="animation-delay:-2.6s">
     <path d="M684,154H936A14,14 0 0 1 950,168V290A14,14 0 0 1 936,304H684A14,14 0 0 1 670,290V168A14,14 0 0 1 684,154Z" fill="#000" fill-opacity="0.3"/>
     <path d="M684,146H936A14,14 0 0 1 950,160V282A14,14 0 0 1 936,296H684A14,14 0 0 1 670,282V160A14,14 0 0 1 684,146Z" fill="#0e1530" stroke="#34d399" stroke-opacity="0.6"/>
     <rect x="692" y="146" width="44" height="3" rx="1.5" fill="#34d399"/>
     <text x="692" y="190" class="sans" font-size="19" font-weight="800" fill="#e8ebf8">Softs.Ai</text>
     <text x="692" y="216" class="sans" font-size="15" font-weight="600" fill="#34d399">Current company</text><path d="M706,238H810A14,14 0 0 1 824,252V252A14,14 0 0 1 810,266H706A14,14 0 0 1 692,252V252A14,14 0 0 1 706,238Z" fill="#34d399" fill-opacity="0.1" stroke="#34d399" stroke-opacity="0.5"/><circle cx="708" cy="252" r="3.5" fill="#34d399"><animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/></circle><text x="720" y="256.5" class="mono" font-size="11.5" font-weight="700" letter-spacing="1.5" fill="#34d399">ACTIVE NOW</text>
-  </g>
+  </g></g>
 </svg>

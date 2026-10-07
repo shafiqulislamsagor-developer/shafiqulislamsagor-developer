@@ -16,7 +16,7 @@
   <path d="M17,2H243A15,15 0 0 1 258,17V57A15,15 0 0 1 243,72H17A15,15 0 0 1 2,57V17A15,15 0 0 1 17,2Z" fill="url(#side)" stroke="#232c55"/>
   <path d="M20,5H240A12,12 0 0 1 252,17V47A12,12 0 0 1 240,59H20A12,12 0 0 1 8,47V17A12,12 0 0 1 20,5Z" fill="url(#top)" stroke="#ffffff" stroke-opacity="0.08"/>
   <path d="M20,6.5H240" stroke="#fff" stroke-opacity="0.14"/>
-  <rect x="8" y="56" width="244" height="2" fill="#e8ebf8" fill-opacity="0.55"/>
+  <rect x="14" y="57" width="232" height="3" rx="1.5" fill="#e8ebf8" fill-opacity="0.55"><animate attributeName="fill-opacity" values="0.3;0.95;0.3" dur="2.8s" begin="1s" repeatCount="indefinite"/></rect>
   <path transform="translate(22 19) scale(0.95)" fill="#e8ebf8" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
   <text x="62" y="39" class="sans" font-size="18" font-weight="700" fill="#e8ebf8">X / Twitter</text>
   <path d="M218,33 l8,-8 M218,25 h8 v8" stroke="#8a93b8" stroke-width="2" fill="none" stroke-linecap="round"/>
