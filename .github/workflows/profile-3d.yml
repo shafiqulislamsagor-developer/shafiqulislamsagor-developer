@@ -1,0 +1,32 @@
+name: Generate 3D Contribution Graph
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # every day at 00:00 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write # needed to push the generated SVG to the `output` branch
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Generate 3D contribution graph
+        uses: yoshi389111/github-profile-3d-contrib@v0.9.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
+          SETTING_JSON: .github/profile-3d-settings.json
+
+      - name: Push to output branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: profile-3d-contrib
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

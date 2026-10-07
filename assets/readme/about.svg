@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="494" viewBox="0 0 1000 494" role="img" aria-label="About me: Full Stack Developer at Softs.Ai, based in Mymensingh, Bangladesh. Stack: React, Next.js, TypeScript, Node.js, MongoDB. Learning advanced React patterns and API architecture. Open to work.">
+<title>About me: Full Stack Developer at Softs.Ai, based in Mymensingh, Bangladesh. Stack: React, Next.js, TypeScript, Node.js, MongoDB. Learning advanced React patterns and API architecture. Open to work.</title>
+<style>
+  .sans { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Ubuntu, Arial, sans-serif; }
+  .mono { font-family: ui-monospace, SFMono-Regular, 'SF Mono', 'Cascadia Code', Consolas, 'Liberation Mono', Menlo, monospace; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  .ln { animation: ln .55s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes ln { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
+</style>
+<defs>
+  <linearGradient id="pn-bg" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#0c1328"/><stop offset="1" stop-color="#070b17"/></linearGradient>
+  <pattern id="pn-dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.045"/></pattern>
+  <linearGradient id="pn-runner" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+  <linearGradient id="ed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d142e"/><stop offset="1" stop-color="#0a1024"/></linearGradient>
+  <clipPath id="edclip"><path d="M56,56H944A16,16 0 0 1 960,72V444A16,16 0 0 1 944,460H56A16,16 0 0 1 40,444V72A16,16 0 0 1 56,56Z"/></clipPath>
+</defs>
+
+  <path d="M20.8,0.8H979.3A20,20 0 0 1 999.3,20.8V473.3A20,20 0 0 1 979.3,493.3H20.8A20,20 0 0 1 0.8,473.3V20.8A20,20 0 0 1 20.8,0.8Z" fill="url(#pn-bg)"/>
+  <path d="M20.8,0.8H979.3A20,20 0 0 1 999.3,20.8V473.3A20,20 0 0 1 979.3,493.3H20.8A20,20 0 0 1 0.8,473.3V20.8A20,20 0 0 1 20.8,0.8Z" fill="url(#pn-dots)"/>
+  <path d="M20.8,0.8H979.3A20,20 0 0 1 999.3,20.8V473.3A20,20 0 0 1 979.3,493.3H20.8A20,20 0 0 1 0.8,473.3V20.8A20,20 0 0 1 20.8,0.8Z" fill="none" stroke="#1c2546" stroke-width="1.5"/>
+  <path d="M20.8,0.8H979.3A20,20 0 0 1 999.3,20.8V473.3A20,20 0 0 1 979.3,493.3H20.8A20,20 0 0 1 0.8,473.3V20.8A20,20 0 0 1 20.8,0.8Z" fill="none" stroke="url(#pn-runner)" stroke-width="1.5" stroke-linecap="round" pathLength="100" stroke-dasharray="9 91" opacity="0.85">
+    <animate attributeName="stroke-dashoffset" values="100;0" dur="10s" repeatCount="indefinite"/>
+  </path>
+  <path d="M114,30H886A14,14 0 0 1 900,44V136A14,14 0 0 1 886,150H114A14,14 0 0 1 100,136V44A14,14 0 0 1 114,30Z" fill="#0e1530" fill-opacity="0.35" stroke="#26305a" stroke-opacity="0.5"/>
+  <path d="M85,43H915A15,15 0 0 1 930,58V148A15,15 0 0 1 915,163H85A15,15 0 0 1 70,148V58A15,15 0 0 1 85,43Z" fill="#0e1530" fill-opacity="0.6" stroke="#26305a" stroke-opacity="0.7"/>
+  <path d="M56,66H944A16,16 0 0 1 960,82V454A16,16 0 0 1 944,470H56A16,16 0 0 1 40,454V82A16,16 0 0 1 56,66Z" fill="#000" fill-opacity="0.35"/>
+  <g clip-path="url(#edclip)">
+    <rect x="40" y="56" width="920" height="404" fill="url(#ed)"/>
+    <rect x="40" y="56" width="920" height="48" fill="#0f1733"/>
+    <line x1="40" y1="104" x2="960" y2="104" stroke="#26305a"/>
+    <circle cx="66" cy="80" r="6" fill="#ff5f57"/><circle cx="86" cy="80" r="6" fill="#febc2e"/><circle cx="106" cy="80" r="6" fill="#28c840"/>
+    <path d="M144,66H278A8,8 0 0 1 286,74V96A8,8 0 0 1 278,104H144A8,8 0 0 1 136,96V74A8,8 0 0 1 144,66Z" fill="url(#ed)" stroke="#26305a"/>
+    <rect x="136" y="102" width="150" height="4" fill="#0d142e"/>
+    <rect x="136" y="66" width="150" height="2" rx="1" fill="#22d3ee"/>
+    <rect x="152" y="78" width="18" height="18" rx="3" fill="#3178c6"/>
+    <text x="161" y="91.5" text-anchor="middle" class="sans" font-size="9" font-weight="800" fill="#fff">TS</text>
+    <text x="180" y="91.5" class="mono" font-size="13" fill="#c3c9e6">about.ts</text>
+    <text x="936" y="85" text-anchor="end" class="mono" font-size="12" fill="#5b6488">TypeScript · UTF-8</text>
+    <text x="90" y="138" text-anchor="end" class="mono" font-size="14" fill="#5b6488">1</text>
+    <text x="114" y="138" xml:space="preserve" class="mono ln" style="animation-delay:0.30s" font-size="15"><tspan fill="#5b6488" font-style="italic">// hello, world — nice to meet you</tspan></text>
+    <text x="90" y="166" text-anchor="end" class="mono" font-size="14" fill="#5b6488">2</text>
+    <text x="114" y="166" xml:space="preserve" class="mono ln" style="animation-delay:0.44s" font-size="15"><tspan fill="#c792ea">const </tspan><tspan fill="#82aaff">sagor</tspan><tspan fill="#8a93b8">: </tspan><tspan fill="#ffcb6b">Developer</tspan><tspan fill="#8a93b8"> = {</tspan></text>
+    <text x="90" y="194" text-anchor="end" class="mono" font-size="14" fill="#5b6488">3</text>
+    <text x="114" y="194" xml:space="preserve" class="mono ln" style="animation-delay:0.58s" font-size="15"><tspan fill="#7dd3fc">  role</tspan><tspan fill="#8a93b8">: </tspan><tspan fill="#c3e88d">&quot;Full Stack Developer&quot;</tspan><tspan fill="#8a93b8">,</tspan></text>
+    <text x="90" y="222" text-anchor="end" class="mono" font-size="14" fill="#5b6488">4</text>
+    <text x="114" y="222" xml:space="preserve" class="mono ln" style="animation-delay:0.72s" font-size="15"><tspan fill="#7dd3fc">  company</tspan><tspan fill="#8a93b8">: </tspan><tspan fill="#c3e88d">&quot;Softs.Ai&quot;</tspan><tspan fill="#8a93b8">,</tspan></text>
+    <text x="90" y="250" text-anchor="end" class="mono" font-size="14" fill="#5b6488">5</text>
+    <text x="114" y="250" xml:space="preserve" class="mono ln" style="animation-delay:0.86s" font-size="15"><tspan fill="#7dd3fc">  location</tspan><tspan fill="#8a93b8">: </tspan><tspan fill="#c3e88d">&quot;Mymensingh, Bangladesh&quot;</tspan><tspan fill="#8a93b8">,</tspan></text>
+    <text x="90" y="278" text-anchor="end" class="mono" font-size="14" fill="#5b6488">6</text>
+    <text x="114" y="278" xml:space="preserve" class="mono ln" style="animation-delay:1.00s" font-size="15"><tspan fill="#7dd3fc">  stack</tspan><tspan fill="#8a93b8">: [</tspan><tspan fill="#c3e88d">&quot;React&quot;</tspan><tspan fill="#8a93b8">, </tspan><tspan fill="#c3e88d">&quot;Next.js&quot;</tspan><tspan fill="#8a93b8">, </tspan><tspan fill="#c3e88d">&quot;TypeScript&quot;</tspan><tspan fill="#8a93b8">, </tspan><tspan fill="#c3e88d">&quot;Node.js&quot;</tspan><tspan fill="#8a93b8">, </tspan><tspan fill="#c3e88d">&quot;MongoDB&quot;</tspan><tspan fill="#8a93b8">],</tspan></text>
+    <text x="90" y="306" text-anchor="end" class="mono" font-size="14" fill="#5b6488">7</text>
+    <text x="114" y="306" xml:space="preserve" class="mono ln" style="animation-delay:1.14s" font-size="15"><tspan fill="#7dd3fc">  learning</tspan><tspan fill="#8a93b8">: [</tspan><tspan fill="#c3e88d">&quot;Advanced React patterns&quot;</tspan><tspan fill="#8a93b8">, </tspan><tspan fill="#c3e88d">&quot;API architecture&quot;</tspan><tspan fill="#8a93b8">],</tspan></text>
+    <text x="90" y="334" text-anchor="end" class="mono" font-size="14" fill="#5b6488">8</text>
+    <text x="114" y="334" xml:space="preserve" class="mono ln" style="animation-delay:1.28s" font-size="15"><tspan fill="#7dd3fc">  principles</tspan><tspan fill="#8a93b8">: [</tspan><tspan fill="#c3e88d">&quot;clean&quot;</tspan><tspan fill="#8a93b8">, </tspan><tspan fill="#c3e88d">&quot;scalable&quot;</tspan><tspan fill="#8a93b8">, </tspan><tspan fill="#c3e88d">&quot;maintainable&quot;</tspan><tspan fill="#8a93b8">],</tspan></text>
+    <text x="90" y="362" text-anchor="end" class="mono" font-size="14" fill="#5b6488">9</text>
+    <text x="114" y="362" xml:space="preserve" class="mono ln" style="animation-delay:1.42s" font-size="15"><tspan fill="#7dd3fc">  openToWork</tspan><tspan fill="#8a93b8">: </tspan><tspan fill="#f78c6c">true</tspan><tspan fill="#8a93b8">,</tspan></text>
+    <text x="90" y="390" text-anchor="end" class="mono" font-size="14" fill="#5b6488">10</text>
+    <text x="114" y="390" xml:space="preserve" class="mono ln" style="animation-delay:1.56s" font-size="15"><tspan fill="#8a93b8">};</tspan></text>
+    <rect x="135" y="375" width="9" height="19" rx="1.5" fill="#22d3ee" class="ln" style="animation-delay:1.70s"><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.5;0.5;1" dur="1s" repeatCount="indefinite"/></rect>
+    <rect x="870" y="116" width="72" height="72" rx="4" fill="#ffffff" fill-opacity="0.04"/><rect x="876" y="122" width="30.6" height="3" rx="1" fill="#5b6488" fill-opacity="0.7"/><rect x="876" y="128" width="5.4" height="3" rx="1" fill="#c792ea" fill-opacity="0.7"/><rect x="881.4" y="128" width="4.5" height="3" rx="1" fill="#82aaff" fill-opacity="0.7"/><rect x="885.9" y="128" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="887.7" y="128" width="8.1" height="3" rx="1" fill="#ffcb6b" fill-opacity="0.7"/><rect x="896.7" y="128" width="2.7" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="877.8" y="134" width="3.6" height="3" rx="1" fill="#7dd3fc" fill-opacity="0.7"/><rect x="881.4" y="134" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="883.2" y="134" width="19.8" height="3" rx="1" fill="#c3e88d" fill-opacity="0.7"/><rect x="903" y="134" width="0.9" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="877.8" y="140" width="6.3" height="3" rx="1" fill="#7dd3fc" fill-opacity="0.7"/><rect x="884.1" y="140" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="885.9" y="140" width="9" height="3" rx="1" fill="#c3e88d" fill-opacity="0.7"/><rect x="894.9" y="140" width="0.9" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="877.8" y="146" width="7.2" height="3" rx="1" fill="#7dd3fc" fill-opacity="0.7"/><rect x="885" y="146" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="886.8" y="146" width="21.6" height="3" rx="1" fill="#c3e88d" fill-opacity="0.7"/><rect x="908.4" y="146" width="0.9" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="877.8" y="152" width="4.5" height="3" rx="1" fill="#7dd3fc" fill-opacity="0.7"/><rect x="882.3" y="152" width="2.7" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="885" y="152" width="6.3" height="3" rx="1" fill="#c3e88d" fill-opacity="0.7"/><rect x="891.3" y="152" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="893.1" y="152" width="8.1" height="3" rx="1" fill="#c3e88d" fill-opacity="0.7"/><rect x="901.2" y="152" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="903" y="152" width="10.8" height="3" rx="1" fill="#c3e88d" fill-opacity="0.7"/><rect x="913.8" y="152" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="915.6" y="152" width="8.1" height="3" rx="1" fill="#c3e88d" fill-opacity="0.7"/><rect x="923.7" y="152" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="925.5" y="152" width="8.1" height="3" rx="1" fill="#c3e88d" fill-opacity="0.7"/><rect x="933.6" y="152" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="877.8" y="158" width="7.2" height="3" rx="1" fill="#7dd3fc" fill-opacity="0.7"/><rect x="885" y="158" width="2.7" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="887.7" y="158" width="22.5" height="3" rx="1" fill="#c3e88d" fill-opacity="0.7"/><rect x="910.2" y="158" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="912" y="158" width="16.2" height="3" rx="1" fill="#c3e88d" fill-opacity="0.7"/><rect x="928.2" y="158" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="877.8" y="164" width="9" height="3" rx="1" fill="#7dd3fc" fill-opacity="0.7"/><rect x="886.8" y="164" width="2.7" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="889.5" y="164" width="6.3" height="3" rx="1" fill="#c3e88d" fill-opacity="0.7"/><rect x="895.8" y="164" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="897.6" y="164" width="9" height="3" rx="1" fill="#c3e88d" fill-opacity="0.7"/><rect x="906.6" y="164" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="908.4" y="164" width="12.6" height="3" rx="1" fill="#c3e88d" fill-opacity="0.7"/><rect x="921" y="164" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="877.8" y="170" width="9" height="3" rx="1" fill="#7dd3fc" fill-opacity="0.7"/><rect x="886.8" y="170" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="888.6" y="170" width="3.6" height="3" rx="1" fill="#f78c6c" fill-opacity="0.7"/><rect x="892.2" y="170" width="0.9" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/><rect x="876" y="176" width="1.8" height="3" rx="1" fill="#8a93b8" fill-opacity="0.7"/>
+    <rect x="40" y="432" width="920" height="28" fill="#0f1733"/>
+    <line x1="40" y1="432" x2="960" y2="432" stroke="#26305a"/>
+    <circle cx="62" cy="446" r="4" fill="#34d399"/>
+    <text x="74" y="450.5" xml:space="preserve" class="mono" font-size="12" fill="#8a93b8">main   ✓ 0 problems</text>
+    <text x="940" y="450.5" text-anchor="end" xml:space="preserve" class="mono" font-size="12" fill="#8a93b8">Ln 10, Col 3   Spaces: 2   TypeScript</text>
+  </g>
+  <path d="M56,56H944A16,16 0 0 1 960,72V444A16,16 0 0 1 944,460H56A16,16 0 0 1 40,444V72A16,16 0 0 1 56,56Z" fill="none" stroke="#26305a" stroke-width="1.2"/>
+</svg>

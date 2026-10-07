@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="64" viewBox="0 0 1000 64" role="img" aria-label="04 EXPERIENCE">
+<title>04 EXPERIENCE</title>
+<style>
+  .sans { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Ubuntu, Arial, sans-serif; }
+  .mono { font-family: ui-monospace, SFMono-Regular, 'SF Mono', 'Cascadia Code', Consolas, 'Liberation Mono', Menlo, monospace; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+<defs>
+  <linearGradient id="tbg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0c1328"/><stop offset="1" stop-color="#070b17"/></linearGradient>
+  <linearGradient id="hl" x1="325.5" y1="0" x2="766.4" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.7"/><stop offset="0.6" stop-color="#6366f1" stop-opacity="0.3"/><stop offset="1" stop-color="#6366f1" stop-opacity="0.05"/></linearGradient>
+  <linearGradient id="glint" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee" stop-opacity="0"/><stop offset="0.7" stop-color="#e0f7ff"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
+  <clipPath id="hc"><rect x="325.5" y="26" width="440.9" height="12"/></clipPath>
+</defs>
+
+  <path d="M16.8,4.8H983.3A16,16 0 0 1 999.3,20.8V43.3A16,16 0 0 1 983.3,59.3H16.8A16,16 0 0 1 0.8,43.3V20.8A16,16 0 0 1 16.8,4.8Z" fill="url(#tbg)" stroke="#1c2546" stroke-width="1.5"/>
+  <path d="M49,16H81A9,9 0 0 1 90,25V39A9,9 0 0 1 81,48H49A9,9 0 0 1 40,39V25A9,9 0 0 1 49,16Z" fill="#0e1530" stroke="#22d3ee" stroke-opacity="0.55"/>
+  <text x="65" y="37" text-anchor="middle" class="mono" font-size="14" font-weight="700" fill="#22d3ee">04</text>
+  <text x="108" y="39.5" class="sans" font-size="20" font-weight="800" letter-spacing="3.5" fill="#e8ebf8">EXPERIENCE</text>
+  <line x1="325.5" y1="32" x2="766.4" y2="32" stroke="url(#hl)" stroke-width="1.2"/>
+  <rect y="31" width="70" height="2.2" rx="1" fill="url(#glint)" clip-path="url(#hc)"><animate attributeName="x" values="255.5;766.4;766.4" keyTimes="0;0.55;1" dur="4.5s" repeatCount="indefinite"/></rect>
+  <text x="960" y="37" text-anchor="end" class="mono" font-size="13" fill="#5b6488">// where I've worked</text>
+</svg>
